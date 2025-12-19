@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CI/CD Tutorial - Sum Function Demo</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+          Cantarell, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 600px;
+        width: 100%;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .subtitle {
+        color: #666;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 14px;
+      }
+
+      .badge {
+        display: inline-block;
+        background: #10b981;
+        color: white;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+        margin: 10px auto;
+        display: block;
+        width: fit-content;
+      }
+
+      .calculator {
+        background: #f9fafb;
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+      }
+
+      .input-group {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        align-items: center;
+      }
+
+      input {
+        flex: 1;
+        padding: 12px;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 18px;
+        transition: border-color 0.3s;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      .operator {
+        font-size: 24px;
+        font-weight: bold;
+        color: #667eea;
+      }
+
+      button {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .result {
+        margin-top: 20px;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        text-align: center;
+        border: 2px solid #e5e7eb;
+      }
+
+      .result-label {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+
+      .result-value {
+        font-size: 32px;
+        font-weight: bold;
+        color: #667eea;
+      }
+
+      .error {
+        background: #fee;
+        border-color: #fcc;
+      }
+
+      .error .result-value {
+        color: #dc2626;
+        font-size: 16px;
+      }
+
+      .info {
+        background: #f0f9ff;
+        border: 1px solid #bae6fd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 20px;
+      }
+
+      .info h3 {
+        color: #0369a1;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .info ul {
+        list-style: none;
+        color: #0c4a6e;
+        font-size: 13px;
+        line-height: 1.8;
+      }
+
+      .info li:before {
+        content: "✓ ";
+        color: #10b981;
+        font-weight: bold;
+        margin-right: 5px;
+      }
+
+      footer {
+        text-align: center;
+        color: #666;
+        font-size: 12px;
+        margin-top: 20px;
+      }
+
+      footer a {
+        color: #667eea;
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🚀 Sum Function Demo</h1>
+      <p class="subtitle">CI/CD Pipeline with GitHub Actions</p>
+      <span class="badge">✓ Deployed via GitHub Pages</span>
+
+      <div class="calculator">
+        <div class="input-group">
+          <input
+            type="number"
+            id="num1"
+            placeholder="Enter first number"
+            value="5"
+          />
+          <span class="operator">+</span>
+          <input
+            type="number"
+            id="num2"
+            placeholder="Enter second number"
+            value="3"
+          />
+        </div>
+
+        <button onclick="calculate()">Calculate Sum</button>
+
+        <div id="result" class="result" style="display: none">
+          <div class="result-label">Result:</div>
+          <div class="result-value" id="resultValue">0</div>
+        </div>
+      </div>
+
+      <div class="info">
+        <h3>📦 CI/CD Pipeline Features:</h3>
+        <ul>
+          <li>Automated testing with Node.js test runner</li>
+          <li>Code linting with ESLint</li>
+          <li>Code formatting checks with Prettier</li>
+          <li>Build artifact generation</li>
+          <li>Automatic deployment to GitHub Pages</li>
+        </ul>
+      </div>
+
+      <footer>
+        <p>
+          <a href="https://github.com/genzzo/ci-cd-tutorial">View on GitHub</a>
+        </p>
+      </footer>
+    </div>
+
+    <script type="module">
+      import { sum } from "./sum.js";
+
+      window.calculate = function () {
+        const num1Input = document.getElementById("num1");
+        const num2Input = document.getElementById("num2");
+        const resultDiv = document.getElementById("result");
+        const resultValue = document.getElementById("resultValue");
+
+        try {
+          const num1 = parseFloat(num1Input.value);
+          const num2 = parseFloat(num2Input.value);
+
+          const result = sum(num1, num2);
+
+          resultValue.textContent = result;
+          resultDiv.style.display = "block";
+          resultDiv.classList.remove("error");
+        } catch (error) {
+          resultValue.textContent = `Error: ${error.message}`;
+          resultDiv.style.display = "block";
+          resultDiv.classList.add("error");
+        }
+      };
+
+      // Allow Enter key to calculate
+      document.getElementById("num1").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") calculate();
+      });
+      document.getElementById("num2").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") calculate();
+      });
+
+      // Calculate on page load with default values
+      window.addEventListener("load", calculate);
+    </script>
+  </body>
+</html>
