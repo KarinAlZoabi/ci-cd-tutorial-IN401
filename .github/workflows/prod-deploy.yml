@@ -80,29 +80,29 @@ jobs:
           path: public/
           retention-days: 30
 
-deploy:
-  name: Deploy to GitHub pages
-  needs: ci
-  runs-on: ubuntu-latest
+  deploy:
+    name: Deploy to GitHub pages
+    needs: ci
+    runs-on: ubuntu-latest
 
-  if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
-  environment:
-    name: github-pages
-    url: ${{ steps.deployment. outputs.page_url }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment. outputs.page_url }}
 
-  steps:
-    - name: Download artifact
-      uses: actions/download-artifact@v7
-      with:
-        name: demo-site
-        path: ./public
-      
-    - name: Upload to GitHub pages
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: ./public
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: demo-site
+          path: ./public
+        
+      - name: Upload to GitHub pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
 
-    - name: Deploy to Github pages
-      id: deployment
-      uses: actions/deploy-pages@v4 
+      - name: Deploy to Github pages
+        id: deployment
+        uses: actions/deploy-pages@v4 
